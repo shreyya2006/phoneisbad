@@ -1,0 +1,97 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Body */
+body {
+    background: #0f172a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main Container */
+.container {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 12px;
+    width: 600px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+/* Title */
+h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #38bdf8;
+}
+
+/* Video */
+video {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid #334155;
+    margin-bottom: 15px;
+}
+
+/* Status Text */
+.status {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* Status Colors */
+.focused {
+    color: #22c55e; /* Green */
+}
+
+.distracted {
+    color: #ef4444; /* Red */
+}
+
+/* Controls */
+.controls {
+    margin-top: 15px;
+}
+
+input, select {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    margin: 5px;
+    outline: none;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background: #3b82f6;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    margin: 5px;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+/* Alert Box */
+.alert-box {
+    margin-top: 15px;
+    padding: 10px;
+    background: #ef4444;
+    border-radius: 6px;
+    display: none;
+}
