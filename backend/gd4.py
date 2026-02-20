@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import time
 
+# -------- MediaPipe Setup --------
 BaseOptions = mp.tasks.BaseOptions
 FaceLandmarker = mp.tasks.vision.FaceLandmarker
 FaceLandmarkerOptions = mp.tasks.vision.FaceLandmarkerOptions
@@ -25,8 +26,6 @@ left_eye_overlay = None
 right_eye_overlay = None
 
 DEAD_ZONE = 8
-EYE_THRESHOLD = 16
-PITCH_THRESHOLD = 5
 GAZE_TIME_THRESHOLD = 5
 
 with FaceLandmarker.create_from_options(options) as landmarker:
@@ -53,16 +52,16 @@ with FaceLandmarker.create_from_options(options) as landmarker:
                 return int(lm[i].x * w), int(lm[i].y * h)
 
             # -------- Eye centers --------
-            left_eye_outer = pt(33)
-            left_eye_inner = pt(133)
-            right_eye_outer = pt(362)
-            right_eye_inner = pt(263)
+            left_outer = pt(33)
+            left_inner = pt(133)
+            right_outer = pt(362)
+            right_inner = pt(263)
 
-            left_center = ((left_eye_outer[0] + left_eye_inner[0]) // 2,
-                           (left_eye_outer[1] + left_eye_inner[1]) // 2)
+            left_center = ((left_outer[0] + left_inner[0]) // 2,
+                           (left_outer[1] + left_inner[1]) // 2)
 
-            right_center = ((right_eye_outer[0] + right_eye_inner[0]) // 2,
-                            (right_eye_outer[1] + right_eye_inner[1]) // 2)
+            right_center = ((right_outer[0] + right_inner[0]) // 2,
+                            (right_outer[1] + right_inner[1]) // 2)
 
             eye_center_y = (left_center[1] + right_center[1]) // 2
 
@@ -87,9 +86,15 @@ with FaceLandmarker.create_from_options(options) as landmarker:
             if abs(pitch_disp) < DEAD_ZONE:
                 baseline_pitch = int(0.9 * baseline_pitch + 0.1 * pitch)
 
-            # -------- Final detection --------
-            if eye_disp > EYE_THRESHOLD and pitch_disp > PITCH_THRESHOLD:
+            # -------- Balanced Detection Logic --------
+            if eye_disp > 18:
                 looking_down = True
+
+            elif eye_disp > 10 and pitch_disp > 4:
+                looking_down = True
+
+            else:
+                looking_down = False
 
             # -------- Eye ROIs --------
             eye_w, eye_h = 80, 60
